@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast,Bounce } from 'react-toastify';
 
 function Signup(props) {
 
@@ -19,17 +20,38 @@ function Signup(props) {
     console.log(json);
     if (json.status === 200) {
       localStorage.setItem('token', json.token);
-      navigate('/login');
-      props.showAlert("Account Created Successfully","Success")
+      navigate('/');
+      toast.success('Signup Successful !', {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        });
   } else {
-      props.showAlert("Invalid Credantials","danger")
+    toast.error('Invalid Details !', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Bounce,
+      });
   }
   }
   const onChange = (e) => {
     setregister({ ...register, [e.target.name]: e.target.value })
   }
+
   return (
-    <div className='container my-3'>
+    <div className='container pt-5'>
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Username</label>

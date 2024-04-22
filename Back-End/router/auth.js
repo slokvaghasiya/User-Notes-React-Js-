@@ -25,7 +25,6 @@ authRoute.post('/register', [
             return res.send({ status: 400, message: "Email Already Registered" });
         } else {
 
-
             const salt = await bcrypt.genSalt(10)
             const secPass = await bcrypt.hash(req.body.password, salt)
             let newUser = await user.create({

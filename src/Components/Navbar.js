@@ -2,6 +2,7 @@ import React,{useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useLocation } from "react-router-dom";
 import {useNavigate} from 'react-router-dom'
+import { toast,Bounce} from 'react-toastify';
 
 export default function Navbar(props) {
     const navigate = useNavigate();
@@ -9,7 +10,17 @@ export default function Navbar(props) {
     const logout = ()=>{
         localStorage.removeItem('token');
         navigate('/login');
-        props.showAlert("Logout Successfully","Success")
+        toast.success('Logout Successfully !', {
+            position: "bottom-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+            });
     }
 
     let location = useLocation();

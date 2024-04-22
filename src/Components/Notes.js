@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import noteContext from '../Context/notes/noteContext'
 import NoteItem from './NoteItem';
 import AddNote from './AddNote'
+import { toast,Bounce} from 'react-toastify';
 
 export default function Notes(props) {
   const navigate = useNavigate()
@@ -31,16 +32,25 @@ export default function Notes(props) {
   const handleClick = (e) => {
     ref.current.click();
     editNote(note.id,note.etitle, note.edescription, note.etag);
-    props.showAlert("Note Update Successfully","Success")
+    toast.info('Note Updated !', {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+      });
   }
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value })
   }
   return (
-    <>
-      <AddNote showAlert={props.showAlert} />
+    <div className='container' >
+      <AddNote />
       <button type="button" className="btn btn-primary d-none" ref={ref} data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
       </button>
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
@@ -75,10 +85,9 @@ export default function Notes(props) {
       <div className='row md-3'>
         <h2>Your Notes</h2>
         {notes.map((note) => {
-          return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert
-          } />
+          return <NoteItem key={note._id} updateNote={updateNote} note={note} />
         })}
       </div>
-    </>
+    </div>
   )
 }

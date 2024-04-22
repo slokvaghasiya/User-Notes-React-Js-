@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
+import { toast,Bounce} from 'react-toastify';
 
 function Login(props) {
     const navigate = useNavigate()
@@ -15,17 +16,36 @@ function Login(props) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ emailId: useEmail, password: usePassword })
-            // body: JSON.stringify({ emailId: setlogin.emailId, password: setlogin.password })
         })
-        // console.log("data", setlogin.emailId);
         const json = await res.json();
         console.log(json);
         if (json.status === 200) {
             localStorage.setItem('token', json.token);
-            props.showAlert("Login Successfully","Success")
+            toast.success('Login Successful !', {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+                });
             navigate('/');
         } else {
-            props.showAlert("Invalid Details","danger")
+            toast.error('Invalid Email Or Paassword!', {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+                });
+            // props.showAlert("Invalid Details","danger")
         }
     }
     const onChange = (e) => {
@@ -36,7 +56,7 @@ function Login(props) {
     }
 
     return (
-        <div className='container mt-5'>
+        <div className='container pt-5'>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="emailId" className="form-label">Email address</label>
