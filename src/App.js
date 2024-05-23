@@ -3,7 +3,6 @@ import React from 'react'
 import Home from './Components/Home';
 import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import About from './Components/About';
 import NoteState from './Context/notes/noteState';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
@@ -21,7 +20,6 @@ function App() {
           <div className='App'>
             <Routes>
               <Route exact path='/' element={<Home />} />
-              <Route exact path='/about' element={<About />} />
               <Route exact path='/Login' element={<Login/>} />
               <Route exact path='/Signup' element={<Signup/>}  />
 

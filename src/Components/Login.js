@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import { toast,Bounce} from 'react-toastify';
+import axio from "axios"
 
 function Login(props) {
     const navigate = useNavigate()
-    // const [uselogin, setlogin] = useState({ emailId: "", password: "" })
+    
     const [useEmail, setEmail] = useState('')
     const [usePassword, setPassword] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch('http://localhost:4000/api/auth/login', {
+        const res = await fetch('https://portfolio-ofyx.onrender.com/v1/project/userauth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -18,9 +19,11 @@ function Login(props) {
             body: JSON.stringify({ emailId: useEmail, password: usePassword })
         })
         const json = await res.json();
-        console.log(json);
-        if (json.status === 200) {
-            localStorage.setItem('token', json.token);
+
+        if (json.message.includes("Successful")) {
+            localStorage.setItem('token', json.data);
+            navigate('/');
+            console.log("inside");
             toast.success('Login Successful !', {
                 position: "bottom-right",
                 autoClose: 2000,
@@ -32,7 +35,6 @@ function Login(props) {
                 theme: "colored",
                 transition: Bounce,
                 });
-            navigate('/');
         } else {
             toast.error('Invalid Email Or Paassword!', {
                 position: "bottom-right",
@@ -45,7 +47,6 @@ function Login(props) {
                 theme: "colored",
                 transition: Bounce,
                 });
-            // props.showAlert("Invalid Details","danger")
         }
     }
     const onChange = (e) => {

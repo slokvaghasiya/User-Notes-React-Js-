@@ -12,7 +12,6 @@ export default function AddNote(props) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log("Inside");
     addNote(note.title, note.description, note.tag);
     setNote({ title: '', description: '', tag: '' })
     toast.success('Note Added Successfully !', {

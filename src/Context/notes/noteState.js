@@ -3,14 +3,14 @@ import noteContext from "./noteContext";
 
 const NoteState = (props) => {
 
-    let host = "http://localhost:4000"
+    let host = "https://portfolio-ofyx.onrender.com"
     const notesInitial = []
 
     const [notes, setNotes] = useState(notesInitial)
 
     const getAllNote = async () => {
 
-        const res = await fetch(`${host}/api/note/allNote`, {
+        const res = await fetch(`${host}/v1/project/usernotes/getAllNote`, {
             method: 'GET',
             headers: {
                 'Content-Type' :'application/json',
@@ -18,14 +18,14 @@ const NoteState = (props) => {
             },
         })
         const json = await res.json();
-        // console.log("DATA",json);
+        console.log("DATA",json);
         setNotes(json.data)
     }
 
 //  Add Note
         const addNote = async (title, description, tag) => {
 
-            const res = await fetch(`${host}/api/note/addNote`, {
+            const res = await fetch(`${host}/v1/project/usernotes/addNote`, {
                 method: 'POST',
                 headers: {
                     'Content-Type' :'application/json',
@@ -34,11 +34,11 @@ const NoteState = (props) => {
                 body: JSON.stringify({ title, description, tag })
             })
             const note =await res.json();
+            setNotes(notes.concat(note.data))
         }
-            // setNotes(notes.concat(note))
 // Delete Note
         const deleteNote =async (id) => {
-            const res = await fetch(`${host}/api/note/deleteNote/${id}`, {
+            const res = await fetch(`${host}/v1/project/usernotes/deleteNote/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type' :'application/json',
@@ -53,7 +53,7 @@ const NoteState = (props) => {
 
 // Edit Note
         const editNote = async (id, title, description, tag) => {
-            const res = await fetch(`${host}/api/note/updateNote/${id}`, {
+            const res = await fetch(`${host}/v1/project/usernotes/updateNote/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type' :'application/json',
@@ -76,7 +76,7 @@ const NoteState = (props) => {
             setNotes(newNote);
         }
         return (
-            <noteContext.Provider value={{ notes,getAllNote, addNote, deleteNote, editNote }} >
+            <noteContext.Provider value={{ notes,getAllNote, addNote, deleteNote,editNote  }} >
                 {props.children}
             </noteContext.Provider>
         )
